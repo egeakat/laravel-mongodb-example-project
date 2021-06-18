@@ -16,7 +16,10 @@ class TwitchAnalysisController extends Controller
     }
 
     public function createAnalysis(){
-        if(!auth()->user()->twitchAuthData['access_token']) abort(401);
+        if(!auth()->user()->twitchAuthData){
+           return response()->json(['message'=>'unauthorized'], 401);
+        } 
+       
         $twitchResponse = Http::withHeaders([
             'Client-ID' => env('TWITCH_CLIENT_ID'),
             'Authorization' => 'OAuth ' . auth()->user()->twitchAuthData['access_token'],
