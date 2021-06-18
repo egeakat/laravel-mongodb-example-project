@@ -17,11 +17,7 @@ use App\Models\User;
 Route::get('/', function () {
     //return view('welcome');
 
-    $user = User::create([
-        'name'=>'ege',
-        'email'=>'egeakat@hotmail.com',
-        'password'=>bcrypt('12345')
-    ]);
+   
 
-    return $user;
+ 
 });

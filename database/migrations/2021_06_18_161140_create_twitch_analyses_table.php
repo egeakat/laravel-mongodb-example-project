@@ -16,6 +16,7 @@ class CreateTwitchAnalysesTable extends Migration
         Schema::create('twitch_analyses', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
+            
         });
     }
 
