@@ -5,6 +5,8 @@ use Illuminate\Support\Facades\Route;
 use App\Models\TwitchAnalysis;
 use App\Models\User;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\TwitchAnalysisController;
+use App\Http\Controllers\TwitchController;
 
 
 /*
@@ -28,21 +30,21 @@ Route::group([
     Route::post('/logout', [AuthController::class, 'logout']);
     Route::post('/refresh', [AuthController::class, 'refresh']);
     Route::post('/me', [AuthController::class, 'me']);
+    Route::post('/twitch-logout', [TwitchController::class, 'twitchLogout']);
+
 
 });
 Route::post('/signup', [AuthController::class, 'signup']);
+Route::get('/twitch-redirect', [TwitchController::class, 'twitchRedirect']);
+Route::get('/twitch-login', [TwitchController::class, 'twitchLogin']);
 
+Route::get('/get-analyses', [TwitchAnalysisController::class, 'getAnalyses'])->middleware('auth');
+Route::post('/request-analysis', [TwitchAnalysisController::class, 'createAnalysis'])->middleware('auth');
 
 Route::get('/', function () {
-    //return view('welcome');
+    return response()->json(['message'=>'success']);
     
-    return User::find('60ccb7e8b73abe4cec108132')->twitchAnalyses()->create([
-        'concurrent_viewers' => 2000,
-        'top_viewercount' => 6000,
-        'total_chat_messages' =>2250,
-        'emote_data' =>  ['top_emote' =>'PogChamp', 'total_emotes'=>12, 'emote_prefix' => 'ege'],
-        'total_ad_revenue' => ['amount' => 100.21, 'currency'=>'$']
-    ]);
+
     
 
 });
